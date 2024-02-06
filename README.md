@@ -16,7 +16,7 @@
 3. Queue Implementation: Implement enqueue and dequeue operations.
 4. Binary Search Tree: Implement insertion, deletion, and search operations.
 
-## Day 8-12: Algorithms and Recursion
+## Day 8-11: Algorithms and Recursion
 
 1. Factorial Calculator: Implement factorial calculation using recursion.
 2. Fibonacci Series: Generate Fibonacci series using recursion.
