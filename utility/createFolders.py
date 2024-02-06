@@ -7,9 +7,10 @@ else:
 
 
 for i in range(1, last+1):
-        if not os.path.exists(f'day{i}'):
-            os.mkdir(f'day{i}')
-        with open(f'day{i}/main.cpp', 'w', encoding = 'utf-8') as f:
+        path = f'..\\day{i}'
+        if not os.path.exists(path):
+            os.mkdir(path)
+        with open(f'{path}/main.cpp', 'w', encoding = 'utf-8') as f:
             f.write("// failed compiles: \n")
             f.write("// failed runs: \n")	
             f.write("// time taken: \n")
