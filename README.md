@@ -1,27 +1,29 @@
 # vacation-gauntlet
 
+## Rules (for this branch):
+- None :D
 
-## Day 1: Simple Programs
+## Day 1-3: Simple Programs
 
 1. Hello World: Classic introductory program.
 2. Calculator: Implement basic arithmetic operations.
 3. Temperature Converter: Convert between Celsius and Fahrenheit.
 
-## Day 2-5: Basic Data Structures
+## Day 4-7: Basic Data Structures
 
 1. Linked List: Implement basic operations like insert, delete, search.
 2. Stack Implementation: Implement push, pop, and peek operations.
 3. Queue Implementation: Implement enqueue and dequeue operations.
 4. Binary Search Tree: Implement insertion, deletion, and search operations.
 
-## Day 6-10: Algorithms and Recursion
+## Day 8-12: Algorithms and Recursion
 
 1. Factorial Calculator: Implement factorial calculation using recursion.
 2. Fibonacci Series: Generate Fibonacci series using recursion.
 3. Binary Search: Implement binary search algorithm.
 4. Sorting Algorithms: Implement Bubble Sort, Insertion Sort, Selection Sort.
 
-## Day 11-15: Intermediate Projects
+## Day 12-15: Intermediate Projects
 
 1. String Reversal: Reverse a given string.
 2. Palindrome Checker: Check if a given string is a palindrome.
