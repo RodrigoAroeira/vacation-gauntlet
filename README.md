@@ -46,3 +46,4 @@
 21. Wordle: Implement a wordle-like game.
 22. Blackjack: Implement a game of blackjack (all bets on!).
 23. Game of Life: Implement Conway's Game of Life.
+24. Calculator 2.0: Implement a calculator capable of evaluating full expressions.
