@@ -58,7 +58,7 @@ int main(){
     }
 
 
-    std::cout << n << "-th fibonnaci is: " << r << std::endl;
+    std::cout << n << "-th fibonacci is: " << r << std::endl;
     std::cout << "Chosen method: ";
 
     if(input == 1) {
