@@ -28,7 +28,7 @@ BIG fib(BIG n){
         a = b;
         b = temp;
     }
-    return a;
+    return b;
 }
 
 int main(){
@@ -45,7 +45,7 @@ int main(){
     while(flag){
         switch (input){
             case 1:
-                r = fibr(n-1);
+                r = fibr(n);
                 flag = false;
                 break;
             case 2:
