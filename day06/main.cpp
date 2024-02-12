@@ -159,7 +159,7 @@ int main(int argc, char* argv[]){
     for (int i = 0; i < size-1; i++){
         std::cout << arr[i] << ", ";
     }
-    std::cout << arr[size];
+    std::cout << arr[size-1];
     std::cout << "]" << "\x1b[39m" << std::endl;
 
 
