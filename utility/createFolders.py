@@ -7,7 +7,7 @@ else:
 
 
 for i in range(1, last+1):
-        path = f'..\\day{i}'
+        path = f'..\\day{i:02d}'
         if not os.path.exists(path):
             os.mkdir(path)
         with open(f'{path}/main.cpp', 'w', encoding = 'utf-8') as f:
