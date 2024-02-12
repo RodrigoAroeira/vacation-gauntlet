@@ -155,18 +155,33 @@ int main(int argc, char* argv[]){
 
     int* arr = generate_array(size);
 
-
     std::cout << "Sorted array: \n" << "\x1b[33m" << "[";
     for (int i = 0; i < size-1; i++){
         std::cout << arr[i] << ", ";
     }
     std::cout << arr[size];
-
     std::cout << "]" << "\x1b[39m" << std::endl;
+
+
     pos = binary_search(arr, size, target);
     if(pos != -1)
-        std::cout << "Element found in position " << pos;
+        std::cout << "Element found in position " << pos << std::endl;
     else
-        std::cout << "Element not found";
+        std::cout << "Element not found" << std::endl;
+
+    std::vector<int>* vec = generate_vector(size);
+
+    std::cout << "Sorted vector: \n" << "\x1b[33m" << "<";
+    for (int i : *vec) {
+        std::cout << i << ", ";
+    }
+    std::cout << vec->back();
+    std::cout << ">" << "\x1b[39m" << std::endl;
+
+    pos = binary_search(vec, target);
+    if(pos != -1)
+        std::cout << "Element found in position " << pos << std::endl;
+    else
+        std::cout << "Element not found" << std::endl;
 
 }
