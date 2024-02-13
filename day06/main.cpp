@@ -1,6 +1,6 @@
 // failed compiles: 
 // failed runs: 
-// time taken: 20:00
+// time taken: 1 hour
 
 #include <iostream>
 #include <random>
@@ -185,5 +185,8 @@ int main(int argc, char* argv[]){
         std::cout << "Element found in position " << pos << std::endl;
     else
         std::cout << "Element not found" << std::endl;
+
+
+
 
 }
