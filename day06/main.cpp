@@ -74,13 +74,13 @@ int binary_search(const vector<int>* vec, int target){
     if(vec->at(mid) > target){
         up = vec->at(mid);
     }else{
-        up = vec->at(mid);
+        up = vec->at(mid+1);
     }
 
     if(vec->at(mid) < target){
         lw = vec->at(mid);
     }else{
-        lw = vec->at(mid);
+        lw = vec->at(mid-1);
     }
 
     if(vec->at(0) > target) {
@@ -91,12 +91,12 @@ int binary_search(const vector<int>* vec, int target){
         lw = vec->at(vec->size()-1);
         up = -1;
     }
-    std::cout << "Lower bound: " << lw << "\nUpper bound: " << up;
+    std::cout << "Lower bound: " << lw << "\nUpper bound: " << up << std::endl;
     return -1; // if not found
 }
 
 vector<int>* generate_vector(int size){
-    auto vec = new std::vector<int>(size);
+    auto vec = new std::vector<int>();
 
     std::random_device rd;
     std::mt19937 mt(rd());
@@ -168,6 +168,8 @@ int main(int argc, char* argv[]){
         std::cout << "Element found in position " << pos << std::endl;
     else
         std::cout << "Element not found" << std::endl;
+
+    std::cout << "--------------------------------------------------------------------------------------" << std::endl;
 
     std::vector<int>* vec = generate_vector(size);
 
