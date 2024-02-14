@@ -52,7 +52,8 @@ int binary_search(const int* arr, int size, int target){ // has to be a sorted a
 }
 
 int binary_search(const vector<int>* vec, int target){
-    int n = vec->size();
+    int n = 0;
+    n = vec->size();
     int L = 0;
     int R = n - 1;
     int mid, up, lw;
@@ -80,7 +81,7 @@ int binary_search(const vector<int>* vec, int target){
     if(vec->at(mid) < target){
         lw = vec->at(mid);
     }else{
-        lw = vec->at(mid-1);
+        lw = vec->at(mid-1); //omg memory leak hiiiiiiii :DDDDD
     }
 
     if(vec->at(0) > target) {
@@ -186,7 +187,8 @@ int main(int argc, char* argv[]){
     else
         std::cout << "Element not found" << std::endl;
 
-
+    delete arr;
+    delete vec;
 
 
 }
