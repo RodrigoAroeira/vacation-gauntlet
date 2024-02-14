@@ -67,9 +67,11 @@ void merge_sort(int* arr, int start, int end){ //recursive
 
 int main(){
     int arr[] = {3, 2, 5, 9, 8, 4, 7, 1, 6};
-    int size = sizeof(arr)/sizeof(int);
-    print_array(arr, size);
-    insertion_sort(arr, size);
-    print_array(arr, size);
+    int arr2[] = {1,2,4,1,23,12};
+    int size1 = sizeof(arr)/sizeof(arr[0]), size2 = sizeof(arr2)/sizeof(arr2[0]);
+//    print_array(arr, size1);
+//    insertion_sort(arr, size1);
+//    print_array(arr, size1);
+
     return 0;
 }
