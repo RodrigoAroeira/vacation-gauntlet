@@ -53,9 +53,9 @@ void merge(int* arr, int start, int mid, int end){
 
     memcpy(&arr[start], arr1, (end-start)*sizeof(int)); //not necessarily start = arr1[0]
 
-    for (int i = 0; i < end-start; i++) {
-        arr[start+i] = arr1[i];
-    }
+//    for (int i = 0; i < end-start; i++) {
+//        arr[start+i] = arr1[i];
+//    }
 }
 
 void merge_sort(int* arr, int start, int end){ //recursive
