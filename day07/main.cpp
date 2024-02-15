@@ -1,5 +1,5 @@
 // failed compiles: 
-// failed runs: 
+// failed runs: way too many
 // time taken: 03:12
 
 #include <iostream>
@@ -50,7 +50,8 @@ void merge(int* arr, int start, int mid, int end){
         j++;
         a++;
     }
-    // memcpy(&arr1[start], arr, end-start); //not necessarily start = arr1[0]
+
+    memcpy(&arr[start], arr1, (end-start)*sizeof(int)); //not necessarily start = arr1[0]
 
     for (int i = 0; i < end-start; i++) {
         arr[start+i] = arr1[i];
@@ -78,7 +79,7 @@ int main(){
 
     print_array(arr, size1);
 
-    merge_sort(arr, 0, size1-1);
+    merge_sort(arr, 0, size1);
     
     std::cout << "After sorting" << std::endl;
 

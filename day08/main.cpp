@@ -1,6 +1,6 @@
 // failed compiles: 
 // failed runs: 
-// time taken: 
+// time taken: we forgor was pretty quick tho
 
 #include <iostream>
 
