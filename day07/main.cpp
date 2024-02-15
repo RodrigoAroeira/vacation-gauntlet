@@ -27,35 +27,39 @@ void insertion_sort(int* arr, int size){ // a more concise implementation can be
     }
 }
 
-void merge(int* arr1, int start, int mid, int end){
-    int arr[end-start];
+void merge(int* arr, int start, int mid, int end){
+    int arr1[end-start];
     int i = start, j = mid, a = 0;
     while (i < mid && j < end){ //actual merging
         if(arr[i] < arr[j]){
-            arr[a] = arr[i];
+            arr1[a] = arr[i];
             i++;
         }else{
-            arr[a] = arr[j];
+            arr1[a] = arr[j];
             j++;
         }
         a++;
     }
     while(i<mid){//array dump
-        arr[a] = arr[i];
+        arr1[a] = arr[i];
         i++;
         a++;
     }
     while (j<end){ //array dump
-        arr[a] = arr[j];
+        arr1[a] = arr[j];
         j++;
         a++;
     }
-    memcpy(&arr1[start], arr, end-start); //not necessarily start = arr1[0]
+    // memcpy(&arr1[start], arr, end-start); //not necessarily start = arr1[0]
+
+    for (int i = 0; i < end-start; i++) {
+        arr[start+i] = arr1[i];
+    }
 }
 
 void merge_sort(int* arr, int start, int end){ //recursive
 
-    if (end-start > 1) // if the indexes are the same, subarray is 1-sized
+    if (end-start <= 1) // if the indexes are the same, subarray is 1-sized
         return;
 
     int mid = start + (end - start)/2; // gets middle value during recursions
@@ -69,9 +73,16 @@ int main(){
     int arr[] = {3, 2, 5, 9, 8, 4, 7, 1, 6};
     int arr2[] = {1,2,4,1,23,12};
     int size1 = sizeof(arr)/sizeof(arr[0]), size2 = sizeof(arr2)/sizeof(arr2[0]);
-//    print_array(arr, size1);
-//    insertion_sort(arr, size1);
-//    print_array(arr, size1);
+    
+    std::cout << "Before sorting" << std::endl;
+
+    print_array(arr, size1);
+
+    merge_sort(arr, 0, size1-1);
+    
+    std::cout << "After sorting" << std::endl;
+
+    print_array(arr, size1);
 
     return 0;
 }
