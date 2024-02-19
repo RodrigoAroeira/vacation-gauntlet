@@ -1,6 +1,6 @@
 // failed compiles: 
 // failed runs: way too many
-// time taken: 03:12
+// time taken: a day or two
 
 #include <iostream>
 #include <string>
@@ -69,9 +69,36 @@ void merge_sort(int* arr, int start, int end){ //recursive
     merge(arr, start, mid, end);
 }
 
+void count_sort(int* arr, int size){
+    int max = 0;
+
+    for (int i = 0; i < size; ++i) {
+        if(arr[i] > max)
+            max = arr[i];
+    }
+    
+    int count[max + 1];
+    memset(count, 0, sizeof(count));
+    
+    for (int i = 0; i < size; ++i) {
+            count[arr[i]]++;
+    }
+    int k = 0;
+    for (int i = 0; i < max+1; ++i) {
+        for (int j = 0; j < count[i]; ++j) {
+            arr[k] = i;
+            k++;
+        }
+    }
+//    print_array(count, max+1);
+}
+
+void quick_sort(){
+
+}
 
 int main(){
-    int arr[] = {3, 2, 5, 9, 8, 4, 7, 1, 6};
+    int arr[] = {3, 2, 5, 9, 8, 4, 7, 1, 6, 6, 3, 2, 7, 5, 3, 7, 2, 1, 2, 3, 7, 5};
     int arr2[] = {1,2,4,1,23,12};
     int size1 = sizeof(arr)/sizeof(arr[0]);
     int size2 = sizeof(arr2)/sizeof(arr2[0]);
@@ -80,7 +107,7 @@ int main(){
 
     print_array(arr, size1);
 
-    merge_sort(arr, 0, size1);
+    count_sort(arr, size1);
     
     std::cout << "After sorting" << std::endl;
 
