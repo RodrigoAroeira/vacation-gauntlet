@@ -73,7 +73,8 @@ void merge_sort(int* arr, int start, int end){ //recursive
 int main(){
     int arr[] = {3, 2, 5, 9, 8, 4, 7, 1, 6};
     int arr2[] = {1,2,4,1,23,12};
-    int size1 = sizeof(arr)/sizeof(arr[0]), size2 = sizeof(arr2)/sizeof(arr2[0]);
+    int size1 = sizeof(arr)/sizeof(arr[0]);
+    int size2 = sizeof(arr2)/sizeof(arr2[0]);
     
     std::cout << "Before sorting" << std::endl;
 
