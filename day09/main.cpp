@@ -18,11 +18,9 @@ public:
     }
 
     void push(T val){
-        Stack* current = this;
-        while (current->next){
-            current = current->next;
-        }
-        current->next = new Stack(val);
+        Stack* NewNode = new Stack<T>(val);
+        last->next = NewNode;
+        last = NewNode;
         size++;
     }
 
