@@ -13,7 +13,7 @@ private:
 public:
     explicit Stack(T value){
         data = value;
-        size++;
+        last = this;
     }
 
     void push(T val){
