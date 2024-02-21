@@ -10,6 +10,7 @@ private:
     T data;
     int size = 1;
     Stack* next = nullptr;
+    Stack* last = nullptr;
 public:
     explicit Stack(T value){
         data = value;
