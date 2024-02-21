@@ -10,17 +10,17 @@ private:
     T data;
     int size = 1;
     Stack* next = nullptr;
-    Stack* last = nullptr;
+    Stack* top = nullptr;
 public:
     explicit Stack(T value){
         data = value;
-        last = this;
+        top = this;
     }
 
     void push(T val){
         Stack* NewNode = new Stack<T>(val);
-        last->next = NewNode;
-        last = NewNode;
+        top->next = NewNode;
+        top = NewNode;
         size++;
     }
 
@@ -34,7 +34,7 @@ public:
     }
 
     T peek(){
-        return last->data;
+        return top->data;
     }
 
     T peek(int pos){
