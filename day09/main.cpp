@@ -34,11 +34,7 @@ public:
     }
 
     T peek(){
-        Stack* current = this;
-        while(current->next){
-            current = current->next;
-        }
-        return current->data;
+        return last->data;
     }
 
     T peek(int pos){
