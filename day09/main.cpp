@@ -26,9 +26,15 @@ public:
 
     void pop(){
         Stack* current = this;
+        Stack* prev = nullptr;
         while (current->next){
+            prev = current;
             current = current->next;
         }
+        if(prev){
+            prev->next = nullptr;
+        }
+        top = prev;
         size--;
         delete current;
     }
