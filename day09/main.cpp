@@ -53,6 +53,10 @@ public:
         return current->data;
     }
 
+    int getSize(){
+        return size;
+    }
+
     void print(){
         Stack* current = this;
         std::cout << "Stack: ";
