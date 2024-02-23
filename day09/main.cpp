@@ -45,7 +45,7 @@ public:
 
     T peek(int pos){
         Stack* current = this;
-        int i = 0;
+        int i = 1;
         while(current->next && i < pos){
             current = current->next;
             i++;
