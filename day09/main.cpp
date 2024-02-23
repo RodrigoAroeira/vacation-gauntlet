@@ -69,6 +69,38 @@ public:
         }
         std::cout << std::endl;
     }
+
+    void print(int until){
+        Stack* current = this;
+        std::cout << "Stack: ";
+        int i = 0;
+        while(current && i < until) {
+            std::cout << current->data << "->";
+            current = current->next;
+            i++;
+        }
+        std::cout << std::endl;
+    }
+    
+    void print(int from, int to){
+        Stack* current = this;
+        std::cout << "Stack: ";
+        int i = 0;
+        if (from > 1)
+        {
+            std::cout << "....->"
+        }
+        
+        while(current && i < to) {
+            if (i >= from)
+            {
+                std::cout << current->data << "->";
+            }
+            current = current->next;
+            i++;
+        }
+        std::cout << std::endl;
+    }
 };
 
 template <typename T>
