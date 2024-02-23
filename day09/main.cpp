@@ -88,7 +88,7 @@ public:
         int i = 0;
         if (from > 1)
         {
-            std::cout << "....->"
+            std::cout << "....->";
         }
         
         while(current && i < to) {
