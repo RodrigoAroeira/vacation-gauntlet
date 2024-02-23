@@ -45,6 +45,9 @@ public:
 
     T peek(int pos){
         Stack* current = this;
+        if (pos > size || pos == size){
+            return peek();
+        }
         int i = 1;
         while(current->next && i < pos){
             current = current->next;
