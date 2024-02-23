@@ -85,8 +85,8 @@ public:
     void print(int from, int to){
         Stack* current = this;
         std::cout << "Stack: ";
-        int i = 0;
-        if (from > 1)
+        int i = 1;
+        if (from > 1 && from < to)
         {
             std::cout << "....->";
         }
