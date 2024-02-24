@@ -164,18 +164,25 @@ public:
     }
 };
 
-int main(){
-    auto s = new Stack<int>(0);
-    auto q = new Queue<int> (0);
-    for (int i = 1; i <= 10; i++){
-        s->push(i);
-        q->enqueue(i);
+int main(int argc, char const *argv[])
+{
+    Stack<int> s(1);
+    int start = argc > 1 ? std::stoi(argv[1]) : 3;
+    int end = argc > 2 ? std::stoi(argv[2]) : 27;
+    for (int i = 2; i <= 1e6; i++)
+    {
+        s.push(i);
     }
-    s->print();
 
-    auto sx = s->peek(3);
-    std::cout << "Stack peek: " << sx << std::endl;
-    auto qx = q->peek();
-    q->print();
-    std::cout << "Queue peek: "<< qx << std::endl;
+    s.print(start, end);
+
+    Queue<int> q(1);
+    for (int i = 2; i <= 1e6; i++)
+    {
+        q.enqueue(i);
+    }
+
+    q.print();
+
+    return 0;
 }
