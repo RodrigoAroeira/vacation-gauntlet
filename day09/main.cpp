@@ -109,10 +109,12 @@ class Queue{
 private:
     T data;
     Queue* next = nullptr;
+    Queue* end = nullptr;
     int size = 1;
 public:
     explicit Queue(T val){
         data = val;
+        end = this;
     }
 
     void enqueue(T val){
