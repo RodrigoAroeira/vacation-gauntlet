@@ -108,7 +108,7 @@ template <typename T>
 class Queue{
 private:
     T data;
-    Queue* next;
+    Queue* next = nullptr;
     int size = 1;
 public:
     explicit Queue(T val){
@@ -123,6 +123,7 @@ public:
         }
         cur->next = new Queue<T>(val);
     }
+    
     T dequeue(){
         if(next){
             data = next->data;
