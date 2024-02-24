@@ -165,6 +165,58 @@ public:
         }
     std::cout << std::endl;
     }
+
+    void print(int until){
+        Queue* current = this;
+        if (until >= size)
+        {
+            this->print();
+            return;
+        }
+        printf("Queue until position %d: <-", until);
+        int i = 0;
+        while(current && i < until) {
+            std::cout << current->data;
+            if(current->next){
+                std::cout << "<-";
+            }
+            current = current->next;
+            i++;
+        }
+        std::cout << std::endl;
+    }
+
+    void print(int from, int to){
+        Queue* current = this;
+        printf("Queue from positions %d to %d: <-", from, to);
+        int i = 1;
+        if (from <= 1 && to >= size)
+        {
+            this->print();
+            return;
+        }
+        else if (from > 1 && from <= to)
+        {
+            std::cout << " ....<-";
+        }
+        
+        while(current && i <= to) {
+            if (i >= from)
+            {
+                std::cout << current->data;
+                if(current->next){
+                    std::cout << "<-";
+                }
+            }
+            current = current->next;
+            i++;
+        }
+        if (to < size)
+        {
+            std::cout << "....";
+        }
+        std::cout << std::endl;
+    }
 };
 
 int main(int argc, char const *argv[])
