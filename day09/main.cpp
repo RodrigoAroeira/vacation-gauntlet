@@ -3,6 +3,7 @@
 // time taken: 
 
 #include <iostream>
+#include <cstdio>
 
 template <typename T>
 class Stack{
