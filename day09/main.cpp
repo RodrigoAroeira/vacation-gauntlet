@@ -241,7 +241,7 @@ int main(int argc, char const *argv[])
 
     int start = argc > 1 ? std::stoi(argv[1]) : 3;
     int end = argc > 2 ? std::stoi(argv[2]) : 27;
-    
+
     s.print(start, end);
 
     Queue<int> q(1);
