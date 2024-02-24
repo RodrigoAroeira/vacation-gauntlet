@@ -235,6 +235,8 @@ public:
 
 int main(int argc, char const *argv[])
 {
+    int const MAX = 1e6;
+
     Stack<int> s(1);
     int start = argc > 1 ? std::stoi(argv[1]) : 3;
     int end = argc > 2 ? std::stoi(argv[2]) : 27;
