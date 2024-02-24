@@ -133,6 +133,7 @@ public:
         }else{
             delete this;
         }
+        size--;
     }
     T peek(int pos){
         Queue* cur = this;
