@@ -90,14 +90,14 @@ public:
     
     void print(int from, int to){
         Stack* current = this;
-        printf("Stack from positions %d to %d: ", from, to);
         int i = 1;
         if (from <= 1 && to >= size)
         {
             this->print();
             return;
         }
-        else if (from > 1 && from <= to)
+        printf("Stack from positions %d to %d: ", from, to);
+        if (from > 1 && from <= to)
         {
             std::cout << "....->";
         }
@@ -198,14 +198,14 @@ public:
 
     void print(int from, int to){
         Queue* current = this;
-        printf("Queue from positions %d to %d: <-", from, to);
         int i = 1;
         if (from <= 1 && to >= size)
         {
             this->print();
             return;
         }
-        else if (from > 1 && from <= to)
+        printf("Queue from positions %d to %d: <-", from, to);
+        if (from > 1 && from <= to)
         {
             std::cout << "....<-";
         }
@@ -231,7 +231,7 @@ public:
 
 int main(int argc, char const *argv[])
 {
-    int const MAX = 1e6;
+    int const MAX = 10;
 
     Stack<int> s(1);
     for (int i = 2; i <= MAX; i++)
