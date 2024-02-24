@@ -207,7 +207,7 @@ public:
         }
         else if (from > 1 && from <= to)
         {
-            std::cout << " ....<-";
+            std::cout << "....<-";
         }
         
         while(current && i <= to) {
