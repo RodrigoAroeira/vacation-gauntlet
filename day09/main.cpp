@@ -118,7 +118,9 @@ public:
     }
 
     void enqueue(T val){
-        Queue* cur = this;
+        Queue* NewNode = new Queue<T>(val);
+        end->next = NewNode;
+        end = NewNode;
         size++;
         while(cur->next){
             cur = cur->next;
