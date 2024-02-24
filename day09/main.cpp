@@ -238,22 +238,23 @@ int main(int argc, char const *argv[])
     int const MAX = 1e6;
 
     Stack<int> s(1);
-    int start = argc > 1 ? std::stoi(argv[1]) : 3;
-    int end = argc > 2 ? std::stoi(argv[2]) : 27;
-    for (int i = 2; i <= 1e6; i++)
+    for (int i = 2; i <= MAX; i++)
     {
         s.push(i);
     }
 
+    int start = argc > 1 ? std::stoi(argv[1]) : 3;
+    int end = argc > 2 ? std::stoi(argv[2]) : 27;
+    
     s.print(start, end);
 
     Queue<int> q(1);
-    for (int i = 2; i <= 1e6; i++)
+    for (int i = 2; i <= MAX; i++)
     {
         q.enqueue(i);
     }
 
-    q.print();
+    q.print(start, end);
 
     return 0;
 }
