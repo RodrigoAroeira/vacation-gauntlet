@@ -73,7 +73,12 @@ public:
 
     void print(int until){
         Stack* current = this;
-        std::cout << "Stack: ";
+        if (until >= size)
+        {
+            this->print();
+            return;
+        }
+        printf("Stack until position %d: ", until);
         int i = 0;
         while(current && i < until) {
             std::cout << current->data << "->";
@@ -85,20 +90,29 @@ public:
     
     void print(int from, int to){
         Stack* current = this;
-        std::cout << "Stack: ";
+        printf("Stack from positions %d to %d: ", from, to);
         int i = 1;
-        if (from > 1 && from < to)
+        if (from <= 1 && to >= size)
+        {
+            this->print();
+            return;
+        }
+        else if (from > 1 && from <= to)
         {
             std::cout << "....->";
         }
         
-        while(current && i < to) {
+        while(current && i <= to) {
             if (i >= from)
             {
                 std::cout << current->data << "->";
             }
             current = current->next;
             i++;
+        }
+        if (to < size)
+        {
+            std::cout << "....";
         }
         std::cout << std::endl;
     }
