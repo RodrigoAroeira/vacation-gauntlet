@@ -161,11 +161,7 @@ public:
     }
 
     T peek(){
-        Queue* cur = this;
-        while(cur->next)
-            cur = cur->next;
-
-        return cur->data;
+        return data;
     }
     void print(){
         Queue* current = this;
