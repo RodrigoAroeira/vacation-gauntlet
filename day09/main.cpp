@@ -122,10 +122,6 @@ public:
         end->next = NewNode;
         end = NewNode;
         size++;
-        while(cur->next){
-            cur = cur->next;
-        }
-        cur->next = new Queue<T>(val);
     }
     
     T dequeue(){
