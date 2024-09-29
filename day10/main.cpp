@@ -1,104 +1,103 @@
-// failed compiles: 
-// failed runs: 
-// time taken: 
+// failed compiles:
+// failed runs:
+// time taken:
 
 #include <iostream>
 
-template<typename Type>
-class TreeNode{
+template <typename T> class TreeNode {
 private:
-    Type data;
-    TreeNode* left = nullptr;
-    TreeNode* right = nullptr;
-    TreeNode* prev = nullptr;
-    int depth = 0;
+  T m_data;
+  TreeNode *m_left = nullptr;
+  TreeNode *m_right = nullptr;
+  TreeNode *m_prev = nullptr;
+  int m_depth = 0;
+
 public:
+  TreeNode() : TreeNode(T(), nullptr, nullptr){};
 
-    explicit TreeNode(){};
+  TreeNode(T data) : TreeNode(data, nullptr, nullptr) {}
 
-    explicit TreeNode(Type data){
-        this->data = data;
+  TreeNode(T data, TreeNode<T> *left, TreeNode<T> *right)
+      : m_data(data), m_left(left), m_right(right) {
+
+    left->m_prev = this;
+    right->m_prev = this;
+
+    if (left)
+      left->m_depth = m_depth + 1;
+    if (right)
+      right->m_depth = m_depth + 1;
+  }
+
+  void insert(T value) {
+    if (value > m_data) {
+      if (m_right == nullptr) {
+        m_right = new TreeNode<T>(value);
+        m_right->m_depth = m_depth + 1;
+        m_right->m_prev = this;
+      } else {
+        m_right->insert(value);
+      }
+
+    } else {
+      if (m_left == nullptr) {
+        m_left = new TreeNode<T>(value);
+        m_left->m_depth = m_depth + 1;
+        m_left->m_prev = this;
+      } else {
+        m_left->insert(value);
+      }
     }
+  }
 
-    explicit TreeNode(Type data, TreeNode<Type>* left, TreeNode<Type>* right){
-        this->data = data;
-        this->left = left;
-        this->right = right;
-        left->prev = this;
-        right->prev = this;
+  void remove(T value) {
+    if (value == m_data) {
+      if (m_prev) {
 
-        if(left)
-            left->depth = depth + 1;
-        if(right)
-            right->depth = depth + 1;
+      } else {
+        std::cout << "Depth minimum reached. Use the change() method to alter "
+                     "value." /*??*/
+                  << std::endl;
+      }
+    } else if (value > m_data) {
+
+      if (m_right != nullptr) {
+        m_right->remove(value);
+      }
+
+    } else {
+
+      if (m_left != nullptr) {
+        m_left->remove(value);
+      }
     }
+  }
 
-    void insert(Type value){
-        if(value > data){
-            if (right == nullptr) {
-                right = new TreeNode<Type>(value);
-                right->depth = depth + 1;
-                right->prev = this;
-            } else{
-                right->insert(value);
-            }
-
-        } else{
-            if (left == nullptr) {
-                left = new TreeNode<Type>(value);
-                left->depth = depth + 1;
-                left->prev = this;
-            } else {
-                left->insert(value);
-            }
-        }
+  bool contains(T value) {
+    if (value == m_data)
+      return true;
+    else if (value > m_data) {
+      if (m_right == nullptr)
+        return false;
+      else
+        return m_right->contains(value);
+    } else {
+      if (m_left == nullptr)
+        return false;
+      else
+        return m_left->contains(value);
     }
+  }
 
-    void remove(Type value){
-        if (value == data){
-            if (prev){
-
-            }
-            else {
-                std::cout << "Depth minimum reached. Use the change() method to alter value." /*??*/ << std::endl;
-            }
-        }else if(value > data){
-            if(right != nullptr){
-                right->remove(value);
-            }
-        }
-        else{
-            if(left != nullptr){
-                left->remove(value);
-            }
-        }
-    }
-
-    bool contains(Type value){
-        if (value == data)
-            return true;
-        else if (value > data){
-            if (right == nullptr)
-                return false;
-            else
-                return right->contains(value);
-        }
-        else {
-            if (left == nullptr)
-                return false;
-            else
-                return left->contains(value);
-        }
-    }
-
-    void print(){
-        std::cout << "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK nao" << std::endl;
-    }
+  void print() {
+    std::cout << "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK nao"
+              << std::endl;
+  }
 };
 
-int main(){
+int main() {
 
-    TreeNode<int> root(0);
-    root.remove(0);
-    return 0;
+  TreeNode<int> root(0);
+  root.remove(0);
+  return 0;
 }

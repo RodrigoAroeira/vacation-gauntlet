@@ -4,23 +4,21 @@
 
 #include <iostream>
 
-using BIG = long long int;
+using BIG = unsigned long long int;
 
-BIG factorial(BIG n){
-    if (n == 0 || n == 1)
-        return 1;
+BIG factorial(BIG n) {
+  if (n == 0 || n == 1)
+    return 1;
 
-    return n * factorial(n-1);
+  return n * factorial(n - 1);
 }
 
+int main() {
+  BIG n;
 
-int main(){
-    BIG n;
+  std::cout << "Type in a whole number to evaluate its factorial: ";
+  std::cin >> n;
 
-    std::cout << "Type in a whole number to evaluate its factorial: ";
-    std::cin >> n;
-
-
-    std::cout << n << "! = " << factorial(n) << std::endl;
-    return 0;
+  std::cout << n << "! = " << factorial(n) << std::endl;
+  return 0;
 }
