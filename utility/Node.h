@@ -6,6 +6,7 @@
 #include <string>
 #include <type_traits>
 
+namespace utils {
 template <typename T>
 class Node {
 public:
@@ -30,3 +31,4 @@ private:
   T m_data;
   std::shared_ptr<Node> m_next;
 };
+} // namespace utils
