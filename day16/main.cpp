@@ -3,6 +3,7 @@
 // time taken:
 
 #include <dirent.h>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -14,7 +15,7 @@
 std::string encrypt(const std::string &str) {
   std::string newStr;
   for (const char c : str) {
-    newStr += c + KEY;
+    newStr += c ^ KEY;
   }
   return newStr;
 }
@@ -23,7 +24,7 @@ std::string decrypt(const std::string &str) {
   std::string newStr;
 
   for (const char c : str) {
-    newStr += c - KEY;
+    newStr += c ^ KEY;
   }
   return newStr;
 }
@@ -45,24 +46,20 @@ void encryptFile(const std::string nomeArq) {
 
   std::vector<std::string> linhas = getFileLines(nomeArq);
 
-  std::ofstream arquivo(nomeArq);
+  std::ofstream arquivo("encrypted." + nomeArq);
 
   for (const auto &linha : linhas)
     arquivo << encrypt(linha) << std::endl;
-
-  arquivo.close();
 }
 
 void decryptFile(const std::string nomeArq) {
 
   std::vector<std::string> linhas = getFileLines(nomeArq);
 
-  std::ofstream arquivo(nomeArq);
+  std::ofstream arquivo("decrypted." + nomeArq);
 
   for (const auto &linha : linhas)
     arquivo << decrypt(linha) << std::endl;
-
-  arquivo.close();
 }
 
 std::vector<std::string> getDirFiles(const std::string &path) {
