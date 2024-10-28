@@ -2,208 +2,87 @@
 // failed runs:
 // time taken:
 
+#include "Node.h"
 #include <cstdio>
 #include <iostream>
+#include <memory>
 
-template <typename T> class Stack {
-private:
-  T m_data;
-  int m_size = 1;
-  Stack *m_next = nullptr;
-  Stack *m_top = this;
+using utils::Node;
 
+template <typename T>
+class Stack {
 public:
-  Stack(T value) : m_data(value) {}
+  Stack(T value) : m_top(std::make_shared<Node<T>>(value)), m_size(1) {}
 
   void push(T val) {
-    Stack *NewNode = new Stack<T>(val);
-    m_top->m_next = NewNode;
-    m_top = NewNode;
+    auto newNode = std::make_shared<Node<T>>(val);
+    m_top->setNext(newNode);
+    m_top = newNode;
     m_size++;
   }
 
   void pop() {
-    Stack *current = this;
-    Stack *prev = nullptr;
-    while (current->m_next) {
-      prev = current;
-      current = current->m_next;
+    if (m_top) {
+      m_top = m_top->getNext();
+      m_size--;
     }
-    if (prev) {
-      prev->m_next = nullptr;
-    }
-    m_top = prev;
-    m_size--;
-    delete current;
   }
 
-  T peek() { return m_top->m_data; }
+  T peek() { return m_top->getData(); }
 
   T peek(int pos) {
-    Stack *current = this;
+    auto current = m_top;
     if (pos > m_size || pos == m_size) {
       return peek();
     }
     int i = 1;
-    while (current->m_next && i < pos) {
-      current = current->m_next;
+    while (current->getNext() && i < pos) {
+      current = current->getNext();
       i++;
     }
-    return current->m_data;
+    return current->getData();
   }
 
   int getSize() { return m_size; }
 
-  void print() {
-    Stack *current = this;
-    std::cout << "Stack: ";
-    while (current) {
-      std::cout << current->m_data << "->";
-      current = current->m_next;
-    }
-    std::cout << std::endl;
-  }
-
-  void print(int until) {
-    Stack *current = this;
-    if (until >= m_size) {
-      this->print();
-      return;
-    }
-    printf("Stack until position %d: ", until);
-    int i = 0;
-    while (current && i < until) {
-      std::cout << current->m_data << "->";
-      current = current->m_next;
-      i++;
-    }
-    std::cout << std::endl;
-  }
-
-  void print(int from, int to) {
-    Stack *current = this;
-    int i = 1;
-    if (from <= 1 && to >= m_size) {
-      this->print();
-      return;
-    }
-    printf("Stack from positions %d to %d: ", from, to);
-    if (from > 1 && from <= to) {
-      std::cout << "....->";
-    }
-
-    while (current && i <= to) {
-      if (i >= from) {
-        std::cout << current->m_data << "->";
-      }
-      current = current->m_next;
-      i++;
-    }
-    if (to < m_size) {
-      std::cout << "....";
-    }
-    std::cout << std::endl;
-  }
+private:
+  int m_size;
+  std::shared_ptr<Node<T>> m_top;
 };
 
-template <typename T> class Queue {
-private:
-  T data;
-  Queue *next = nullptr;
-  Queue *end = this;
-  int size = 1;
-
+template <typename T>
+class Queue {
 public:
-  Queue(T val) : data(val) {}
+  Queue(T val) : m_end(std::make_shared<Node<T>>(val)), m_size(1) {}
 
   void enqueue(T val) {
-    Queue *NewNode = new Queue<T>(val);
-    end->next = NewNode;
-    end = NewNode;
-    size++;
+    auto newNode = std::make_shared<Node<T>>(val);
+    if (m_end)
+      m_end->setNext(newNode);
+    else
+      m_front = newNode;
+    m_size++;
   }
 
   T dequeue() {
-    if (next) {
-      data = next->data;
-      Queue *del = next;
-      next = next->next;
-      delete del;
+    if (m_size == 0) {
+      std::cout << "Queue empty, returning any value\n";
+      return T{};
     }
-    size--;
-  }
-  T peek(int pos) {
-    Queue *curr = this;
-
-    int i = 0;
-    while (curr->next && i < pos) {
-      curr = curr->next;
-      i++;
+    T value = m_front->getData();
+    m_front = m_front->getNext();
+    m_size--;
+    if (m_size == 0) {
+      m_end = nullptr;
+      m_front = nullptr;
     }
-    return curr->data;
+    return value;
   }
 
-  T peek() { return data; }
-
-  void print() {
-    Queue *current = this;
-    std::cout << "Queue: <-";
-    while (current) {
-      std::cout << current->data;
-      if (current->next) {
-        std::cout << "<-";
-      }
-      current = current->next;
-    }
-    std::cout << std::endl;
-  }
-
-  void print(int until) {
-    Queue *current = this;
-    if (until >= size) {
-      this->print();
-      return;
-    }
-    printf("Queue until position %d: <-", until);
-    int i = 0;
-    while (current && i < until) {
-      std::cout << current->data;
-      if (current->next) {
-        std::cout << "<-";
-      }
-      current = current->next;
-      i++;
-    }
-    std::cout << std::endl;
-  }
-
-  void print(int from, int to) {
-    Queue *current = this;
-    int i = 1;
-    if (from <= 1 && to >= size) {
-      this->print();
-      return;
-    }
-    printf("Queue from positions %d to %d: <-", from, to);
-    if (from > 1 && from <= to) {
-      std::cout << "....<-";
-    }
-
-    while (current && i <= to) {
-      if (i >= from) {
-        std::cout << current->data;
-        if (current->next) {
-          std::cout << "<-";
-        }
-      }
-      current = current->next;
-      i++;
-    }
-    if (to < size) {
-      std::cout << "....";
-    }
-    std::cout << std::endl;
-  }
+private:
+  std::shared_ptr<Node<T>> m_end;
+  std::shared_ptr<Node<T>> m_front;
+  int m_size;
 };
 
 int main(int argc, char const *argv[]) {
@@ -214,17 +93,10 @@ int main(int argc, char const *argv[]) {
     s.push(i);
   }
 
-  int start = argc > 1 ? std::stoi(argv[1]) : 3;
-  int end = argc > 2 ? std::stoi(argv[2]) : 27;
-
-  s.print(start, end);
-
   Queue<int> q(1);
   for (int i = 2; i <= MAX; i++) {
     q.enqueue(i);
   }
-
-  q.print(start, end);
 
   return 0;
 }

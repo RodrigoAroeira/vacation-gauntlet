@@ -2,117 +2,117 @@
 // failed runs:
 // time taken: we forgor was pretty quick tho
 
+#include "Node.h"
+#include <cstddef>
 #include <iostream>
+#include <memory>
+#include <sstream>
 
-class Node {
+using utils::Node;
 
-private:
-  int m_data;
-  int m_size = 1;
-  Node *m_prev = nullptr;
-  Node *m_next = nullptr;
-
+template <typename T>
+class LinkedList {
 public:
-  Node(int val) : m_data(val) {}
+  LinkedList(const Node<T> &head)
+      : m_head(std::make_shared<Node<T>>(head)), m_size(1) {}
+
+  LinkedList(const T headVal) : LinkedList(Node<T>(headVal)) {}
+
+  LinkedList() : m_head(nullptr), m_size(0) {}
 
   operator std::string() const {
-    std::string str;
+    std::stringstream ss;
 
     // I thought it was funny doing it that way, so now it'll stay like that
-    for (const Node *current = this; current; current = current->m_next)
-      str += std::to_string(current->m_data) + "->";
+    for (auto current = m_head; current; current = current->getNext())
+      ss << current->getData() << "->";
 
-    return str;
+    return ss.str();
   }
 
-  bool search(const int value) const {
+  friend std::ostream &operator<<(std::ostream &os, const LinkedList &ll) {
+    os << static_cast<std::string>(ll);
+    return os;
+  }
 
-    for (const Node *current = this; current; current = current->m_next)
-      if (current->m_data == value)
+  bool search(const T value) const {
+
+    for (auto current = m_head; current; current = current->getNext())
+      if (current->getData() == value)
         return true;
 
     return false;
   }
 
-  int remove_val(const int value) {
-
-    for (const Node *current = this; current; current = current->m_next) {
-      if (current->m_data == value) {
-        current->m_prev->m_next = current->m_next;
+  bool remove_val(const T value) {
+    std::shared_ptr<Node<T>> prev = nullptr;
+    for (auto current = m_head; current; current = current->getNext()) {
+      if (current->getData() == value) {
+        if (!prev) {
+          m_head = current->getNext();
+        } else {
+          prev->setNext(current->getNext());
+        }
         m_size--;
-        delete current;
-        return 0;
+        return true;
       }
+      prev = current;
     }
-    return -1;
+    return false;
   }
 
-  void insert_back(const int value) {
-    Node *current = this;
-    while (current->m_next)
-      current = current->m_next;
-
-    current->m_next = new Node(value);
-    current->m_next->m_prev = current;
-  }
-
-  void insert_front(const int value) {
-    Node *newNode = new Node(m_data);
-    newNode->m_next = this->m_next;
-
-    if (this->m_next) {
-      this->m_next->m_prev = newNode;
+  void insert_back(const T value) {
+    auto newNode = std::make_shared<Node<T>>(value);
+    if (!m_head) {
+      m_head = newNode;
+      m_size++;
+      return;
     }
 
-    newNode->m_prev = this;
-    this->m_next = newNode;
-    this->m_data = value;
+    auto current = m_head;
+    while (current->getNext())
+      current = current->getNext();
+
+    current->setNext(newNode);
+    m_size++;
   }
 
-  void replace(const int pos, const int value) {
-    Node *current = this;
-    for (int i = 1; current && i < pos; i++) {
-      current = current->m_next;
+  void insert_front(const T value) {
+    auto newNode = std::make_shared<Node<T>>(value);
+    newNode->setNext(m_head);
+    m_head = newNode;
+    m_size++;
+  }
+
+  void replace(const size_t pos, const T value) {
+    auto current = m_head;
+    for (int i = 0; current && i < pos; i++) {
+      current = current->getNext();
     }
-    current->m_data = value;
+
+    if (current)
+      current->setData(value);
   }
 
-  void print_list() const {
-    std::string str = *this;
-    std::cout << str << std::endl;
-  }
-
-  int getData() const { return m_data; }
-
-  void setData(int value) { m_data = value; }
+  void print_list() const { std::cout << *this << std::endl; }
 
   int getSize() const { return m_size; }
+
+private:
+  int m_size;
+  std::shared_ptr<Node<T>> m_head;
 };
 
 int main() {
-  Node head(0);
 
-  for (int i = 1; i <= 10; i++) {
-    head.insert_back(i);
+  LinkedList<int> ll(43);
+  for (int i = 1; i <= 4; i++) {
+    ll.insert_back(i);
   }
-
-  std::cout << "Original list:" << std::endl;
-  head.print_list();
-
-  head.remove_val(3);
-  std::cout << "List after remove_val(3):" << std::endl;
-  head.print_list();
-
-  std::cout << "Insert_front(94)" << std::endl;
-  head.insert_front(94);
-  head.print_list();
-
-  for (int i = 23; i < 28; i++) {
-    head.insert_front(i);
-    head.print_list();
-  }
-
-  std::cout << "Replace 2, 15" << std::endl;
-  head.replace(2, 15);
-  head.print_list();
+  ll.print_list();
+  ll.replace(2, 4);
+  ll.print_list();
+  ll.remove_val(2);
+  ll.insert_front(30);
+  ll.print_list();
 }
