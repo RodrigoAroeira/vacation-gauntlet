@@ -29,8 +29,8 @@ std::string decrypt(const std::string &str) {
   return newStr;
 }
 
-std::vector<std::string> getFileLines(const std::string nomeArq) {
-  std::ifstream arquivo(nomeArq);
+std::vector<std::string> getFileLines(const std::string &path) {
+  std::ifstream arquivo(path);
   if (!arquivo.is_open())
     exit(1);
 
@@ -42,21 +42,21 @@ std::vector<std::string> getFileLines(const std::string nomeArq) {
   return linhas;
 }
 
-void encryptFile(const std::string nomeArq) {
+void encryptFile(const std::string &path) {
 
-  std::vector<std::string> linhas = getFileLines(nomeArq);
+  std::vector<std::string> linhas = getFileLines(path);
 
-  std::ofstream arquivo("encrypted." + nomeArq);
+  std::ofstream arquivo("encrypted." + path);
 
   for (const auto &linha : linhas)
     arquivo << encrypt(linha) << std::endl;
 }
 
-void decryptFile(const std::string nomeArq) {
+void decryptFile(const std::string &path) {
 
-  std::vector<std::string> linhas = getFileLines(nomeArq);
+  std::vector<std::string> linhas = getFileLines(path);
 
-  std::ofstream arquivo("decrypted." + nomeArq);
+  std::ofstream arquivo("decrypted." + path);
 
   for (const auto &linha : linhas)
     arquivo << decrypt(linha) << std::endl;
