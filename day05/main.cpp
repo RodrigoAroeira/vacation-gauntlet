@@ -2,8 +2,9 @@
 // failed runs: 8
 // time taken: 40 minutes
 
+#include "Timer.h"
 #include <ctime>
-#include <iomanip>
+#include <functional>
 #include <iostream>
 
 using BIG = unsigned long long int;
@@ -36,18 +37,18 @@ int main() {
   bool flag = true;
   std::cout << "Type in the n-th fibonacci number to evaluate: ";
   std::cin >> n;
-  clock_t t = clock();
+  std::function<BIG(BIG)> method;
 
   while (flag) {
     std::cout << "Select method: \n1. Recursion\n2. Iteration" << std::endl;
     std::cin >> opt;
     switch (opt) {
     case 1:
-      r = fibr(n);
+      method = fibr;
       flag = false;
       break;
     case 2:
-      r = fib(n);
+      method = fib;
       flag = false;
       break;
     default:
@@ -55,16 +56,13 @@ int main() {
     }
   }
 
+  {
+    utils::Timer _;
+    r = method(n);
+  }
+
   std::cout << n << "-th fibonacci is: " << r << std::endl;
   std::cout << "Chosen method: ";
 
-  if (opt == 1) {
-    std::cout << "recursion" << std::endl;
-  } else {
-    std::cout << "iteration" << std::endl;
-  }
-  std::cout << std::setprecision(6) << std::fixed
-            << "Time taken: " << ((double)(clock() - t)) / CLOCKS_PER_SEC
-            << " Seconds" << std::endl;
-  return 0;
+  std::cout << (opt == 1 ? "recursion" : "iteration") << std::endl;
 }
