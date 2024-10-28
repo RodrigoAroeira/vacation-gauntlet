@@ -4,7 +4,8 @@
 
 #include <iostream>
 
-template <typename T> class TreeNode {
+template <typename T>
+class TreeNode {
 private:
   T m_data;
   TreeNode *m_left = nullptr;
@@ -13,7 +14,7 @@ private:
   int m_depth = 0;
 
 public:
-  TreeNode() : TreeNode(T(), nullptr, nullptr){};
+  TreeNode() : TreeNode(T(), nullptr, nullptr) {};
 
   TreeNode(T data) : TreeNode(data, nullptr, nullptr) {}
 

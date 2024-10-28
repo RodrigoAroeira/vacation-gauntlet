@@ -9,11 +9,12 @@
 template <typename T, size_t Rows, size_t Cols>
 using matrix_t = std::array<std::array<T, Cols>, Rows>;
 
-template <typename T, size_t Rows, size_t Cols> class Matrix {
+template <typename T, size_t Rows, size_t Cols>
+class Matrix {
 public:
   Matrix(matrix_t<T, Rows, Cols> matrix) : m_matrix(matrix) {}
 
-  Matrix(){};
+  Matrix() {};
 
   std::array<T, Rows> &operator[](size_t idx) { return m_matrix[idx]; }
 
