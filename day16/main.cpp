@@ -65,26 +65,22 @@ void decryptFile(const std::string nomeArq) {
   arquivo.close();
 }
 
-std::vector<std::string> getDirFiles(std::string path) {
+std::vector<std::string> getDirFiles(const std::string &path) {
 
-  struct dirent *entry;
   std::vector<std::string> files;
 
-  DIR *dir = opendir(path.c_str());
+  try {
 
-  if (!dir) {
-    std::cerr << "Error opening directory: " << path << std::endl;
-    return {};
+    for (const auto &entry : std::filesystem::directory_iterator(path)) {
+      if (entry.is_regular_file() &&
+          entry.path().filename().string()[0] != '.') {
+        files.push_back(entry.path().filename().string());
+      }
+    }
+
+  } catch (const std::filesystem::filesystem_error &e) {
+    std::cerr << "Error opening directory: " << e.what() << std::endl;
   }
-
-  while ((entry = readdir(dir))) {
-    if (entry->d_type != DT_REG || entry->d_name[0] == '.')
-      continue;
-
-    files.push_back(entry->d_name);
-  }
-
-  closedir(dir);
 
   return files;
 }
