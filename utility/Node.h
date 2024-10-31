@@ -17,7 +17,8 @@ public:
 
   operator std::string() const { return std::to_string(m_data); }
 
-  T getData() const { return m_data; }
+  T &getData() { return m_data; }
+  const T &getData() const { return m_data; }
 
   void setData(const ParamType val) { m_data = val; }
 
