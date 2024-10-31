@@ -2,6 +2,8 @@
 #include <cstring>
 #include <iostream>
 
+static const char ASCII_CASE_DIFF = 'a' - 'A';
+
 bool isLower(char c) { return c >= 'a' && c <= 'z'; }
 
 bool isUpper(char c) { return c >= 'A' && c <= 'Z'; }
@@ -15,24 +17,26 @@ void reverse(char *str) {
 void uppercase(char *str) {
   for (size_t i = 0; str[i]; i++) {
     if (isLower(str[i]))
-      str[i] -= 'a' - 'A';
+      str[i] -= ASCII_CASE_DIFF;
   }
 }
 
 void lowercase(char *str) {
   for (size_t i = 0; str[i]; i++)
     if (isUpper(str[i]))
-      str[i] += 'a' - 'A';
+      str[i] += ASCII_CASE_DIFF;
 }
 
 void switchcase(char *str) {
-  int x = 'a' - 'A';
   for (size_t i = 0; str[i]; i++) {
-    char c = str[i];
-    if (isUpper(c))
-      str[i] += x;
-    else if (isLower(c))
-      str[i] -= x;
+    char &c = str[i];
+    char temp[2] = {c, '\0'};
+    if (isUpper(c)) {
+      lowercase(temp);
+    } else if (isLower(c)) {
+      uppercase(temp);
+    }
+    c = temp[0];
   }
 }
 
