@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <iostream>
+#include <sstream>
 #include <type_traits>
 
 // Constexpr function to get the unit string
@@ -28,22 +29,55 @@ namespace utils {
 template <typename toDur = std::chrono::milliseconds>
 class Timer {
 public:
-  Timer() { mStartTP = std::chrono::high_resolution_clock::now(); }
+  Timer(bool scoped) : mScoped(scoped), mDuration(0), mStarted(false) {
+    if (mScoped)
+      start();
+  }
 
-  ~Timer() {
+  Timer() : Timer(true) {}
+
+  void start() {
+    mStartTP = std::chrono::high_resolution_clock::now();
+    mStarted = true;
+  }
+  void end() {
+    if (!mStarted)
+      return;
+
     auto endTP = std::chrono::high_resolution_clock::now();
 
     auto start = std::chrono::time_point_cast<toDur>(mStartTP)
                      .time_since_epoch()
                      .count();
+
     auto end =
         std::chrono::time_point_cast<toDur>(endTP).time_since_epoch().count();
 
-    auto duration = end - start;
-    std::cout << duration << getUnitString<toDur>() << std::endl;
+    mDuration = end - start;
+
+    if (mScoped)
+      std::cout << durationString() << std::endl;
+
+    mStarted = false;
   }
+
+  ~Timer() {
+    if (mStarted)
+      end();
+  }
+
+  std::string durationString() {
+    std::stringstream ss;
+    ss << mDuration << getUnitString<toDur>();
+    return ss.str();
+  }
+
+  double duration() { return mDuration; }
 
 private:
   std::chrono::time_point<std::chrono::high_resolution_clock> mStartTP;
+  bool mStarted;
+  bool mScoped;
+  double mDuration;
 };
 } // namespace utils
