@@ -15,6 +15,8 @@ public:
 
   Node(ParamType val) : m_data(val), m_next(nullptr) {}
 
+  Node() : Node(T()) {}
+
   operator std::string() const { return std::to_string(m_data); }
 
   T &getData() { return m_data; }
@@ -26,7 +28,11 @@ public:
 
   void setNext(std::shared_ptr<Node<T>> next) { m_next = std::move(next); }
 
-  void setNext(T nextVal) { m_next = std::make_shared<Node<T>>(nextVal); }
+  void setNext(ParamType nextVal) {
+    m_next = std::make_shared<Node<T>>(nextVal);
+  }
+
+  void setNext(const Node<T> &next) { setNext(next.getData()); }
 
 private:
   T m_data;
