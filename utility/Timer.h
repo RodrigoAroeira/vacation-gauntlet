@@ -29,17 +29,15 @@ namespace utils {
 template <typename toDur = std::chrono::milliseconds>
 class Timer {
 public:
-  Timer(bool scoped) : mScoped(scoped), mDuration(0), mStarted(false) {
-    if (mScoped)
-      start();
-  }
+  Timer(const std::string &name) : mStarted(false), mDuration(0), mName(name) {}
 
-  Timer() : Timer(true) {}
+  Timer() : Timer("") {}
 
   void start() {
     mStartTP = std::chrono::high_resolution_clock::now();
     mStarted = true;
   }
+
   void end() {
     if (!mStarted)
       return;
@@ -55,15 +53,14 @@ public:
 
     mDuration = end - start;
 
-    if (mScoped)
-      std::cout << durationString() << std::endl;
+    if (!mName.empty())
+      std::cout << mName << " took: ";
+    else
+      std::cout << "Timer took: ";
+
+    std::cout << durationString() << std::endl;
 
     mStarted = false;
-  }
-
-  ~Timer() {
-    if (mStarted)
-      end();
   }
 
   std::string durationString() {
@@ -77,7 +74,20 @@ public:
 private:
   std::chrono::time_point<std::chrono::high_resolution_clock> mStartTP;
   bool mStarted;
-  bool mScoped;
   double mDuration;
+  std::string mName;
+};
+
+template <typename toDur = std::chrono::milliseconds>
+class ScopedTimer {
+public:
+  ScopedTimer(const std::string &name) : mTimer(name) { mTimer.start(); }
+
+  ScopedTimer() : ScopedTimer("") {}
+
+  ~ScopedTimer() { mTimer.end(); }
+
+private:
+  Timer<toDur> mTimer;
 };
 } // namespace utils
