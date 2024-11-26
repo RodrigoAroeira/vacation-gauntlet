@@ -4,7 +4,6 @@ project(Gauntlet)
 
 include_directories(${CMAKE_SOURCE_DIR}/utility)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 
 # Function to check if a given file contains a main function
 # Arguments:
@@ -36,8 +35,6 @@ foreach(day RANGE 1 30)
 
   # Create an executable target for each day if main function exists
   if(has_main)
-    add_executable(${day_dir}.exe ${main_file})
+    add_executable(${day_dir} ${main_file})
   endif()
 endforeach()
-
-
