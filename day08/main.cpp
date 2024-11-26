@@ -13,12 +13,45 @@ using utils::Node;
 template <typename T>
 class LinkedList {
 public:
+  using ParamType =
+      typename std::conditional<std::is_fundamental<T>::value, T, T &>::type;
+
+  class Iterator {
+  public:
+    Iterator(std::shared_ptr<Node<T>> node) : m_node(node) {}
+
+    T &operator*() { return m_node->getData(); }
+    const T &operator*() const { return m_node->getData(); }
+
+    Iterator &operator++() {
+      m_node = m_node->getNext();
+      return *this;
+    }
+    Iterator operator++(int) {
+      auto tmp = *this;
+      m_node = m_node->getNext();
+      return tmp;
+    }
+
+    bool operator==(const Iterator &other) const {
+      return m_node == other.m_node;
+    }
+
+    bool operator!=(const Iterator &other) const { return !(*this == other); }
+
+  private:
+    std::shared_ptr<Node<T>> m_node;
+  };
+
   LinkedList(const Node<T> &head)
       : m_head(std::make_shared<Node<T>>(head)), m_size(1) {}
 
-  LinkedList(const T headVal) : LinkedList(Node<T>(headVal)) {}
+  LinkedList(const ParamType headVal) : LinkedList(headVal) {}
 
   LinkedList() : m_head(nullptr), m_size(0) {}
+
+  Iterator begin() { return Iterator(m_head); }
+  Iterator end() { return Iterator(nullptr); }
 
   operator std::string() const {
     std::stringstream ss;
@@ -35,7 +68,7 @@ public:
     return os;
   }
 
-  bool search(const T value) const {
+  bool search(const ParamType value) const {
 
     for (auto current = m_head; current; current = current->getNext())
       if (current->getData() == value)
@@ -44,7 +77,7 @@ public:
     return false;
   }
 
-  bool remove_val(const T value) {
+  bool remove_val(const ParamType value) {
     std::shared_ptr<Node<T>> prev = nullptr;
     for (auto current = m_head; current; current = current->getNext()) {
       if (current->getData() == value) {
@@ -61,58 +94,73 @@ public:
     return false;
   }
 
-  void insert_back(const T value) {
+  void insert_back(const ParamType value) {
+
     auto newNode = std::make_shared<Node<T>>(value);
-    if (!m_head) {
+    if (!m_head)
       m_head = newNode;
-      m_size++;
-      return;
-    }
+    else
+      m_tail->setNext(newNode);
 
-    auto current = m_head;
-    while (current->getNext())
-      current = current->getNext();
-
-    current->setNext(newNode);
+    m_tail = newNode;
     m_size++;
   }
 
-  void insert_front(const T value) {
+  void insert_front(const ParamType value) {
     auto newNode = std::make_shared<Node<T>>(value);
     newNode->setNext(m_head);
     m_head = newNode;
     m_size++;
   }
 
-  void replace(const size_t pos, const T value) {
+  void replace(const size_t pos, const ParamType newValue) {
     auto current = m_head;
     for (int i = 0; current && i < pos; i++) {
       current = current->getNext();
     }
 
     if (current)
-      current->setData(value);
+      current->setData(newValue);
   }
 
   void print_list() const { std::cout << *this << std::endl; }
 
-  int getSize() const { return m_size; }
+  size_t getSize() const { return m_size; }
+
+  void operator+(ParamType val) { insert_back(val); }
+
+  friend void operator+(ParamType val, LinkedList<T> &ll) {
+    ll.insert_front(val);
+  }
+
+  size_t m_size;
 
 private:
-  int m_size;
   std::shared_ptr<Node<T>> m_head;
+  std::shared_ptr<Node<T>> m_tail;
 };
 
 int main() {
 
-  LinkedList<int> ll(43);
-  for (int i = 1; i <= 4; i++) {
+  LinkedList<int> ll;
+  for (int i = 0; i <= 5; i++) {
     ll.insert_back(i);
   }
+  ll + 6;
   ll.print_list();
   ll.replace(2, 4);
   ll.print_list();
   ll.remove_val(2);
   ll.insert_front(30);
-  ll.print_list();
+
+  29 + ll;
+  std::cout << ll << std::endl;
+
+  for (const int val : ll)
+    std::cout << val << "->";
+  std::cout << std::endl;
+
+  for (auto it = ll.begin(); it != ll.end(); it++)
+    std::cout << *it << "->";
+  std::cout << std::endl;
 }
